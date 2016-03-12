@@ -5,6 +5,8 @@
 
 Implements Base36 encoding
 
+See [example_test.go](example_test.go) for usage
+
 
 # License
 
