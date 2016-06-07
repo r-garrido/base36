@@ -2,23 +2,31 @@ package base36
 
 import (
 	"math"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestEncode(t *testing.T) {
+var RAW []uint64 = []uint64{0, 50, 100, 999, 1000, 1111, 5959, 99999,
+	123456789, 5481594952936519619, math.MaxInt64 / 2048, math.MaxInt64 / 512,
+	math.MaxInt64, math.MaxUint64}
 
-	assert.Equal(t, "1Y2P0IJ32E8E7", Encode(math.MaxInt64))
-	assert.Equal(t, "15N9Z8L3AU4EB", Encode(5481594952936519619))
+var ENCODED []string = []string{"", "1E", "2S", "RR", "RS", "UV", "4LJ", "255R",
+	"21I3V9", "15N9Z8L3AU4EB", "18CE53UN18F", "4XDKKFEK4XR",
+	"1Y2P0IJ32E8E7", "3W5E11264SGSF"}
+
+func TestEncode(t *testing.T) {
+	for i, v := range RAW {
+		assert.Equal(t, ENCODED[i], Encode(v))
+	}
 }
 
 func TestDecode(t *testing.T) {
-
-	assert.Equal(t, int64(math.MaxInt64), Decode("1Y2P0IJ32E8E7"))
-	assert.Equal(t, int64(math.MaxInt64), Decode("1y2p0Ij32e8E7"))
-	assert.Equal(t, int64(5481594952936519619), Decode("15N9Z8L3AU4EB"))
-	assert.Equal(t, int64(5481594952936519619), Decode("15n9z8l3au4eb"))
+	for i, v := range ENCODED {
+		assert.Equal(t, RAW[i], Decode(v))
+		assert.Equal(t, RAW[i], Decode(strings.ToLower(v)))
+	}
 }
 
 func BenchmarkEncode(b *testing.B) {

@@ -39,13 +39,13 @@ func Encode(value uint64) string {
 }
 
 // Decode decodes a base36-encoded string
-func Decode(s string) int64 {
-	res := int64(0)
+func Decode(s string) uint64 {
+	res := uint64(0)
 	l := len(s) - 1
 	for idx := range s {
 		c := s[l-idx]
 		byteOffset := index[c]
-		res += int64(byteOffset) * int64(math.Pow(36, float64(idx)))
+		res += uint64(byteOffset) * uint64(math.Pow(36, float64(idx)))
 	}
 	return res
 }
