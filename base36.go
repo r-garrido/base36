@@ -1,9 +1,6 @@
 package base36
 
-import (
-	"math"
-	"strings"
-)
+import "math"
 
 var (
 	base36 = []byte{
@@ -11,48 +8,44 @@ var (
 		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
 		'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
 		'U', 'V', 'W', 'X', 'Y', 'Z'}
+
+	index = map[byte]int{
+		'0': 0, '1': 1, '2': 2, '3': 3, '4': 4,
+		'5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+		'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14,
+		'F': 15, 'G': 16, 'H': 17, 'I': 18, 'J': 19,
+		'K': 20, 'L': 21, 'M': 22, 'N': 23, 'O': 24,
+		'P': 25, 'Q': 26, 'R': 27, 'S': 28, 'T': 29,
+		'U': 30, 'V': 31, 'W': 32, 'X': 33, 'Y': 34,
+		'Z': 35,
+		'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14,
+		'f': 15, 'g': 16, 'h': 17, 'i': 18, 'j': 19,
+		'k': 20, 'l': 21, 'm': 22, 'n': 23, 'o': 24,
+		'p': 25, 'q': 26, 'r': 27, 's': 28, 't': 29,
+		'u': 30, 'v': 31, 'w': 32, 'x': 33, 'y': 34,
+		'z': 35,
+	}
 )
 
 // Encode encodes a value to base36
 func Encode(value uint64) string {
-
-	res := ""
-	for value != 0 {
-		res = string(base36[value%36]) + res
+	var res [16]byte
+	var i int
+	for i = len(res) - 1; value != 0; i-- {
+		res[i] = base36[value%36]
 		value /= 36
 	}
-	return res
+	return string(res[i+1:])
 }
 
 // Decode decodes a base36-encoded string
 func Decode(s string) int64 {
-
-	s = reverse(strings.ToUpper(s))
 	res := int64(0)
-
-	for idx, c := range s {
-		byteOffset := indexOf(byte(c))
-		res += int64(int64(byteOffset) * int64(math.Pow(36, float64(idx))))
+	l := len(s) - 1
+	for idx := range s {
+		c := s[l-idx]
+		byteOffset := index[c]
+		res += int64(byteOffset) * int64(math.Pow(36, float64(idx)))
 	}
 	return res
-}
-
-func indexOf(c byte) int {
-
-	for idx, b := range base36 {
-		if b == c {
-			return idx
-		}
-	}
-	return 0
-}
-
-// reverse returns its argument string reversed rune-wise.
-func reverse(s string) string {
-
-	r := []rune(s)
-	for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
-		r[i], r[j] = r[j], r[i]
-	}
-	return string(r)
 }
