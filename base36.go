@@ -59,9 +59,8 @@ func Decode(s string) uint64 {
 var bigRadix = big.NewInt(36)
 var bigZero = big.NewInt(0)
 
-// EncodeBytes encodes a byte slice to base36
-func EncodeBytes(b []byte) string {
-
+// EncodeBytesAsBytes encodes a byte slice base36
+func EncodeBytesAsBytes(b []byte) []byte {
 	x := new(big.Int)
 	x.SetBytes(b)
 
@@ -86,10 +85,15 @@ func EncodeBytes(b []byte) string {
 		answer[i], answer[alen-1-i] = answer[alen-1-i], answer[i]
 	}
 
-	return string(answer)
+	return answer
 }
 
-// DecodeAlphabet decodes a modified base58 string to a byte slice, using alphabet.
+// EncodeBytes encodes a byte slice to base36 string
+func EncodeBytes(b []byte) string {
+	return string(EncodeBytesAsBytes(b))
+}
+
+// DecodeToBytes decodes a modified base58 string to a byte slice, using alphabet.
 func DecodeToBytes(b string) []byte {
 
 	alphabet := string(base36)
