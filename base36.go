@@ -33,7 +33,6 @@ var (
 
 // Encode encodes a number to base36
 func Encode(value uint64) string {
-
 	var res [16]byte
 	var i int
 	for i = len(res) - 1; value != 0; i-- {
@@ -45,7 +44,6 @@ func Encode(value uint64) string {
 
 // Decode decodes a base36-encoded string
 func Decode(s string) uint64 {
-
 	res := uint64(0)
 	l := len(s) - 1
 	for idx := range s {
@@ -95,7 +93,6 @@ func EncodeBytes(b []byte) string {
 
 // DecodeToBytes decodes a modified base58 string to a byte slice, using alphabet.
 func DecodeToBytes(b string) []byte {
-
 	alphabet := string(base36)
 	answer := big.NewInt(0)
 	j := big.NewInt(1)
