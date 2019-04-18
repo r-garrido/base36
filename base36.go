@@ -31,7 +31,7 @@ var (
 	}
 )
 
-// Encode encodes a number to base36
+// Encode encodes a number to base36.
 func Encode(value uint64) string {
 	var res [16]byte
 	var i int
@@ -42,14 +42,13 @@ func Encode(value uint64) string {
 	return string(res[i+1:])
 }
 
-// Decode decodes a base36-encoded string
+// Decode decodes a base36-encoded string.
 func Decode(s string) uint64 {
 	res := uint64(0)
 	l := len(s) - 1
 	for idx := range s {
 		c := s[l-idx]
-		byteOffset := index[c]
-		res += uint64(byteOffset) * uint64(math.Pow(36, float64(idx)))
+		res += uint64(index[c]) * uint64(math.Pow(36, float64(idx)))
 	}
 	return res
 }
@@ -57,7 +56,7 @@ func Decode(s string) uint64 {
 var bigRadix = big.NewInt(36)
 var bigZero = big.NewInt(0)
 
-// EncodeBytesAsBytes encodes a byte slice to base36
+// EncodeBytesAsBytes encodes a byte slice to base36.
 func EncodeBytesAsBytes(b []byte) []byte {
 	x := new(big.Int)
 	x.SetBytes(b)
@@ -86,12 +85,12 @@ func EncodeBytesAsBytes(b []byte) []byte {
 	return answer
 }
 
-// EncodeBytes encodes a byte slice to base36 string
+// EncodeBytes encodes a byte slice to base36 string.
 func EncodeBytes(b []byte) string {
 	return string(EncodeBytesAsBytes(b))
 }
 
-// DecodeToBytes decodes a modified base58 string to a byte slice, using alphabet.
+// DecodeToBytes decodes a base36 string to a byte slice, using alphabet.
 func DecodeToBytes(b string) []byte {
 	alphabet := string(base36)
 	answer := big.NewInt(0)

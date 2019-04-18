@@ -35,6 +35,15 @@ func BenchmarkEncode(b *testing.B) {
 	}
 }
 
+func BenchmarkEncodeBytesAsBytes(b *testing.B) {
+	data := []byte{
+		0x86, 0x4F, 0xD2, 0x6F, 0xB5, 0x59, 0xF7, 0x5B, 0x48, 0x4F, 0x2A, 0x48, 0x4F, 0x2A,
+	}
+	for i := 0; i < b.N; i++ {
+		EncodeBytesAsBytes(data)
+	}
+}
+
 func BenchmarkDecode(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Decode("1Y2P0IJ32E8E7")
