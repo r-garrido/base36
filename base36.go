@@ -57,7 +57,7 @@ func Decode(s string) uint64 {
 var bigRadix = big.NewInt(36)
 var bigZero = big.NewInt(0)
 
-// EncodeBytesAsBytes encodes a byte slice base36
+// EncodeBytesAsBytes encodes a byte slice to base36
 func EncodeBytesAsBytes(b []byte) []byte {
 	x := new(big.Int)
 	x.SetBytes(b)
