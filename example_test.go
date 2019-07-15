@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/martinlindhe/base36"
+
 )
 
 func ExampleEncode() {
