@@ -1,6 +1,5 @@
 # About
 
-[![Travis-CI](https://api.travis-ci.org/martinlindhe/base36.svg)](https://travis-ci.org/martinlindhe/base36)
 [![GoDoc](https://godoc.org/github.com/martinlindhe/base36?status.svg)](https://godoc.org/github.com/martinlindhe/base36)
 
 Implements Base36 encoding and decoding, which is useful to represent
