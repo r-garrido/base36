@@ -23,6 +23,10 @@ fmt.Println(base36.DecodeToBytes("A2F44"))
 // Output: [1 2 3 4]
 ```
 
+## Notice
+
+For basic base 36 conversion, you can use [strconv.FormatUint()](https://pkg.go.dev/strconv#FormatUint) from the stdlib.
+
 ## License
 
 Under [MIT](LICENSE)
