@@ -6,11 +6,19 @@ import (
 )
 
 var (
-	base36 = []byte{
+	Uppercase = [36]byte{
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
 		'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
 		'U', 'V', 'W', 'X', 'Y', 'Z'}
+
+	Lowercase = [36]byte{
+		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+		'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+		'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+		'u', 'v', 'w', 'x', 'y', 'z'}
+
+	base36 = Uppercase
 
 	//index = map[byte]int{
 	//	'0': 0, '1': 1, '2': 2, '3': 3, '4': 4,
@@ -28,7 +36,7 @@ var (
 	//	'u': 30, 'v': 31, 'w': 32, 'x': 33, 'y': 34,
 	//	'z': 35,
 	//}
-	uint8Index = []uint64{
+	uint8Index = [256]uint64{
 		0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -57,7 +65,7 @@ var (
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, // 256
 	}
-	pow36Index = []uint64{
+	pow36Index = [14]uint64{
 		1, 36, 1296, 46656, 1679616, 60466176,
 		2176782336, 78364164096, 2821109907456,
 		101559956668416, 3656158440062976,
@@ -65,6 +73,10 @@ var (
 		9223372036854775808,
 	}
 )
+
+func SetEncodingAlphabet(alphabet [36]byte) {
+	base36 = alphabet
+}
 
 // Encode encodes a number to base36.
 func Encode(value uint64) string {
@@ -134,7 +146,7 @@ func EncodeBytes(b []byte) string {
 
 // DecodeToBytes decodes a base36 string to a byte slice, using alphabet.
 func DecodeToBytes(b string) []byte {
-	alphabet := string(base36)
+	alphabet := string(base36[:])
 	answer := big.NewInt(0)
 	j := big.NewInt(1)
 
